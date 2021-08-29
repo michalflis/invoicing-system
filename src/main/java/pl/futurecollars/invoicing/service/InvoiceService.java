@@ -1,7 +1,7 @@
 package pl.futurecollars.invoicing.service;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -48,7 +48,7 @@ public class InvoiceService {
             .collect(Collectors.toList());
     }
 
-    public List<Invoice> filterByDate(Date date) {
+    public List<Invoice> filterByDate(LocalDate date) {
         return database.getAll()
             .stream()
             .filter((Invoice invoice) -> date.equals(invoice.getDate()))

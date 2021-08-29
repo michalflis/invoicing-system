@@ -7,17 +7,29 @@ import pl.futurecollars.invoicing.model.InvoiceEntry
 import pl.futurecollars.invoicing.model.Vat
 import spock.lang.Specification
 
+import java.time.LocalDate
+
 class InvoiceServiceTest extends Specification {
+
+    def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
+    def issuer2 = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "AAA")
+    def issuerUpdated = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "CCC")
+    def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
+    def receiver2 = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "BBB")
+    def date = new LocalDate(2017,05,05)
+    def date2 = new LocalDate(2021, 01, 17)
+    def invoiceEntry1 = new InvoiceEntry("Gwoździe", 20 as BigDecimal, Vat.VAT_5)
+    def invoiceEntry2 = new InvoiceEntry("Młotek", 35 as BigDecimal, Vat.VAT_23)
+    def entries = Arrays.asList(invoiceEntry1, invoiceEntry2);
+    def invoice = new Invoice(date, issuer, receiver, entries)
+    def invoice2 = new Invoice(date, issuer2, receiver, entries)
+    def invoice3 = new Invoice(date, issuer, receiver2, entries)
+    def invoice4 = new Invoice(date2, issuer, receiver, entries)
+    def invoiceUpdated = new Invoice(date, issuerUpdated, receiver, entries)
+    def database = new InMemoryDatabase()
+
     def "should calculate total net value of all invoice entries"() {
         setup:
-        def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
-        def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
-        def date = new Date(2021 - 05 - 05)
-        def invoiceEntry1 = new InvoiceEntry("Gwoździe", 20 as BigDecimal, Vat.VAT_5)
-        def invoiceEntry2 = new InvoiceEntry("Młotek", 35 as BigDecimal, Vat.VAT_23)
-        def entries = Arrays.asList(invoiceEntry1, invoiceEntry2);
-        def invoice = new Invoice(date, issuer, receiver, entries)
-        def database = new InMemoryDatabase()
         database.save(invoice)
         def invoiceService = new InvoiceService(database)
 
@@ -30,14 +42,6 @@ class InvoiceServiceTest extends Specification {
 
     def "should calculate total tax value of all invoice entries"() {
         setup:
-        def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
-        def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
-        def date = new Date(2021 - 05 - 05)
-        def invoiceEntry1 = new InvoiceEntry("Gwoździe", 20 as BigDecimal, Vat.VAT_5)
-        def invoiceEntry2 = new InvoiceEntry("Młotek", 35 as BigDecimal, Vat.VAT_23)
-        def entries = Arrays.asList(invoiceEntry1, invoiceEntry2);
-        def invoice = new Invoice(date, issuer, receiver, entries)
-        def database = new InMemoryDatabase()
         database.save(invoice)
         def invoiceService = new InvoiceService(database)
 
@@ -50,14 +54,6 @@ class InvoiceServiceTest extends Specification {
 
     def "should calculate total gross value of all invoice entries"() {
         setup:
-        def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
-        def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
-        def date = new Date(2021 - 05 - 05)
-        def invoiceEntry1 = new InvoiceEntry("Gwoździe", 20 as BigDecimal, Vat.VAT_5)
-        def invoiceEntry2 = new InvoiceEntry("Młotek", 35 as BigDecimal, Vat.VAT_23)
-        def entries = Arrays.asList(invoiceEntry1, invoiceEntry2);
-        def invoice = new Invoice(date, issuer, receiver, entries)
-        def database = new InMemoryDatabase()
         database.save(invoice)
         def invoiceService = new InvoiceService(database)
 
@@ -70,18 +66,9 @@ class InvoiceServiceTest extends Specification {
 
     def "should filter list of invoices by issuer name"() {
         setup:
-        def issuer1 = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
-        def issuer2 = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "AAA")
-        def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
-        def date = new Date(2021 - 05 - 05)
-        def entries = new ArrayList<InvoiceEntry>();
-        def invoice1 = new Invoice(date, issuer1, receiver, entries)
-        def invoice2 = new Invoice(date, issuer1, receiver, entries)
-        def invoice3 = new Invoice(date, issuer2, receiver, entries)
-        def database = new InMemoryDatabase()
-        database.save(invoice1)
+        database.save(invoice)
+        database.save(invoice)
         database.save(invoice2)
-        database.save(invoice3)
         def invoiceService = new InvoiceService(database)
 
         when:
@@ -95,23 +82,14 @@ class InvoiceServiceTest extends Specification {
 
     def "should filter list of invoices by receiver name"() {
         setup:
-        def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
-        def receiver1 = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "AAA")
-        def receiver2 = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
-        def date = new Date(2021 - 05 - 05)
-        def entries = new ArrayList<InvoiceEntry>();
-        def invoice1 = new Invoice(date, issuer, receiver1, entries)
-        def invoice2 = new Invoice(date, issuer, receiver2, entries)
-        def invoice3 = new Invoice(date, issuer, receiver2, entries)
-        def database = new InMemoryDatabase()
-        database.save(invoice1)
-        database.save(invoice2)
+        database.save(invoice)
+        database.save(invoice3)
         database.save(invoice3)
         def invoiceService = new InvoiceService(database)
 
         when:
-        def resultReceiver1 = invoiceService.filterByReceiverName("AAA")
-        def resultReceiver2 = invoiceService.filterByReceiverName("YYY")
+        def resultReceiver1 = invoiceService.filterByReceiverName("YYY")
+        def resultReceiver2 = invoiceService.filterByReceiverName("BBB")
 
         then:
         resultReceiver1.size() == 1
@@ -120,22 +98,13 @@ class InvoiceServiceTest extends Specification {
 
     def "should filter list of invoices by issue date"() {
         setup:
-        def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
-        def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
-        def date1 = new Date(2021 - 05 - 05)
-        def date2 = new Date(2020 - 01 - 17)
-        def entries = new ArrayList<InvoiceEntry>();
-        def invoice1 = new Invoice(date1, issuer, receiver, entries)
-        def invoice2 = new Invoice(date1, issuer, receiver, entries)
-        def invoice3 = new Invoice(date2, issuer, receiver, entries)
-        def database = new InMemoryDatabase()
-        database.save(invoice1)
-        database.save(invoice2)
-        database.save(invoice3)
+        database.save(invoice)
+        database.save(invoice)
+        database.save(invoice4)
         def invoiceService = new InvoiceService(database)
 
         when:
-        def resultDate1 = invoiceService.filterByDate(date1)
+        def resultDate1 = invoiceService.filterByDate(date)
         def resultDate2 = invoiceService.filterByDate(date2)
 
         then:
@@ -145,12 +114,6 @@ class InvoiceServiceTest extends Specification {
 
     def "should save invoice in to database"() {
         setup:
-        def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
-        def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
-        def date = new Date(2021 - 05 - 05)
-        def entries = new ArrayList<InvoiceEntry>();
-        def invoice = new Invoice(date, issuer, receiver, entries)
-        def database = new InMemoryDatabase()
         def invoiceService = new InvoiceService(database)
 
         when:
@@ -163,12 +126,6 @@ class InvoiceServiceTest extends Specification {
 
     def "should get invoice from database by Id"() {
         setup:
-        def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
-        def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
-        def date = new Date(2021 - 05 - 05)
-        def entries = new ArrayList<InvoiceEntry>();
-        def invoice = new Invoice(date, issuer, receiver, entries)
-        def database = new InMemoryDatabase()
         database.save(invoice)
         def invoiceService = new InvoiceService(database)
 
@@ -182,15 +139,7 @@ class InvoiceServiceTest extends Specification {
 
     def "should get list of all invoices from database"() {
         setup:
-        def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
-        def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
-        def date = new Date(2021 - 05 - 05)
-        def entries = new ArrayList<InvoiceEntry>();
-        def invoice1 = new Invoice(date, issuer, receiver, entries)
-        def invoice2 = new Invoice(date, issuer, receiver, entries)
-        def invoice3 = new Invoice(date, issuer, receiver, entries)
-        def database = new InMemoryDatabase()
-        database.save(invoice1)
+        database.save(invoice)
         database.save(invoice2)
         database.save(invoice3)
         def invoiceService = new InvoiceService(database)
@@ -204,14 +153,6 @@ class InvoiceServiceTest extends Specification {
 
     def "should update invoice in the database"() {
         setup:
-        def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
-        def issuerUpdated = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "CCC")
-        def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
-        def date = new Date(2021 - 05 - 05)
-        def entries = new ArrayList<InvoiceEntry>();
-        def invoice = new Invoice(date, issuer, receiver, entries)
-        def invoiceUpdated = new Invoice(date, issuerUpdated, receiver, entries)
-        def database = new InMemoryDatabase()
         database.save(invoice)
         def invoiceService = new InvoiceService(database)
         invoiceUpdated.setId(invoice.getId())
@@ -226,12 +167,6 @@ class InvoiceServiceTest extends Specification {
 
     def "should delete invoice from database"() {
         setup:
-        def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
-        def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
-        def date = new Date(2021 - 05 - 05)
-        def entries = new ArrayList<InvoiceEntry>();
-        def invoice = new Invoice(date, issuer, receiver, entries)
-        def database = new InMemoryDatabase()
         database.save(invoice)
         def invoiceService = new InvoiceService(database)
 
