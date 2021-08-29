@@ -37,21 +37,21 @@ public class InvoiceService {
     public List<Invoice> filterByIssuerName(String issuerName) {
         return database.getAll()
             .stream()
-            .filter((Invoice invoice) -> invoice.getIssuer().getName().equals(issuerName))
+            .filter((Invoice invoice) -> issuerName.equals(invoice.getIssuer().getName()))
             .collect(Collectors.toList());
     }
 
     public List<Invoice> filterByReceiverName(String receiverName) {
         return database.getAll()
             .stream()
-            .filter((Invoice invoice) -> invoice.getReceiver().getName().equals(receiverName))
+            .filter((Invoice invoice) -> receiverName.equals(invoice.getReceiver().getName()))
             .collect(Collectors.toList());
     }
 
     public List<Invoice> filterByDate(Date date) {
         return database.getAll()
             .stream()
-            .filter((Invoice invoice) -> invoice.getDate().equals(date))
+            .filter((Invoice invoice) -> date.equals(invoice.getDate()))
             .collect(Collectors.toList());
     }
 
