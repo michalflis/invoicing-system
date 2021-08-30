@@ -1,23 +1,21 @@
 package pl.futurecollars.invoicing.model;
 
-import java.math.BigDecimal;
-
 public enum Vat {
 
-    VAT_23(0.23),
-    VAT_8(0.08),
-    VAT_5(0.05),
-    VAT_0(0),
-    VAT_ZW(0);
+    VAT_23(0.23F),
+    VAT_8(0.08F),
+    VAT_5(0.05F),
+    VAT_0(0F),
+    VAT_ZW(0F);
 
-    private final BigDecimal rate;
+    private final float rate;
 
-    Vat(double rate) {
+    Vat(float rate) {
 
-        this.rate = BigDecimal.valueOf(rate);
+        this.rate = rate;
     }
 
-    public BigDecimal getRate() {
+    public float getRate() {
         return rate;
     }
 }

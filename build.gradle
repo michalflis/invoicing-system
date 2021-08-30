@@ -6,6 +6,7 @@
  * User Manual available at https://docs.gradle.org/6.6.1/userguide/tutorial_java_projects.html
  */
 
+
 plugins {
     // Apply the java plugin to add support for Java
     id 'java'
@@ -78,7 +79,6 @@ jacocoTestCoverageVerification {
         }
     }
 }
-
 
 
 jacoco {

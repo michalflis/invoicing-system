@@ -15,6 +15,6 @@ public class InvoiceEntry {
         this.description = description;
         this.price = price;
         this.vatRate = vatRate;
-        this.vatValue = price.multiply(vatRate.getRate());
+        this.vatValue = price.multiply(new BigDecimal(Float.toString(vatRate.getRate())));
     }
 }
