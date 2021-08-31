@@ -14,4 +14,17 @@ class AppTest extends Specification {
         then:
         result != null
     }
+
+    def "should execute application"() {
+        setup:
+        def app = new App()
+
+        when:
+        def result = app.main()
+
+        then:
+        result == null
+    }
+
+
 }
