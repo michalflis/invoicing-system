@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
-import java.util.UUID;
 import lombok.NoArgsConstructor;
 import pl.futurecollars.invoicing.config.Configurations;
 
@@ -35,17 +34,6 @@ public class FileService {
 
     public void writeToIdKeeper(String id) {
         writeToFile(id, Configurations.FILE_ID_KEEPER_PATH);
-    }
-
-    public boolean containsID(UUID id) {
-        try {
-            return Files.readAllLines(Paths.get(Configurations.FILE_ID_KEEPER_PATH))
-                .stream().anyMatch(line -> line.contains(id.toString()));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     public void clearDatabase() {

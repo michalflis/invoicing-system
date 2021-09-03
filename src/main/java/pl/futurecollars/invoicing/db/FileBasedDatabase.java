@@ -1,8 +1,12 @@
 package pl.futurecollars.invoicing.db;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import pl.futurecollars.invoicing.config.Configurations;
 import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.utils.FileService;
 import pl.futurecollars.invoicing.utils.JsonService;
@@ -13,16 +17,22 @@ public class FileBasedDatabase implements Database {
     JsonService<Invoice> invoiceService = new JsonService<>();
     JsonService<UUID> idService = new JsonService<>();
 
+    private void setRandomID(Invoice invoice) {
+        UUID id = UUID.randomUUID();
+        invoice.setId(id);
+    }
+
     @Override
     public Invoice save(Invoice invoice) {
         if (invoice.getId() == null) {
-            UUID id = UUID.randomUUID();
-            invoice.setId(id);
-
-            if (fileService.containsID(id)) {
-                return save(invoice);
-            }
+            setRandomID(invoice);
         }
+
+        if (containsID(invoice.getId())) {
+            setRandomID(invoice);
+            return save(invoice);
+        }
+
         fileService.writeToDatabase(invoiceService.convertToJson(invoice));
         fileService.writeToIdKeeper(idService.convertToJson(invoice.getId()));
         return invoice;
@@ -30,22 +40,22 @@ public class FileBasedDatabase implements Database {
 
     @Override
     public Invoice getById(UUID id) {
-        if (fileService.containsID(id)) {
-            return invoiceService.covertToObject(fileService.readFromDatabase()
-                    .stream()
-                    .filter(string -> string.contains(id.toString()))
-                    .collect(Collectors.toList())
-                    .get(0),
-                Invoice.class);
+        if (containsID(id)) {
+            return getAll()
+                .stream()
+                .filter(invoice -> invoice.getId().equals(id))
+                .collect(Collectors.toList())
+                .get(0);
         }
         return null;
+
     }
 
     @Override
     public List<Invoice> getAll() {
         return fileService.readFromDatabase()
             .stream()
-            .map(string -> invoiceService.covertToObject(string, Invoice.class))
+            .map(s -> invoiceService.covertToObject(s, Invoice.class))
             .collect(Collectors.toList());
     }
 
@@ -58,7 +68,7 @@ public class FileBasedDatabase implements Database {
 
     @Override
     public boolean delete(UUID id) {
-        if (fileService.containsID(id)) {
+        if (containsID(id)) {
             List<Invoice> databaseCopy = getAll();
             fileService.clearDatabase();
             databaseCopy
@@ -68,6 +78,17 @@ public class FileBasedDatabase implements Database {
             return true;
         }
         return false;
+    }
+
+    public boolean containsID(UUID id) {
+        try {
+            return Files.readAllLines(Paths.get(Configurations.FILE_ID_KEEPER_PATH))
+                .stream()
+                .anyMatch(line -> line.contains(id.toString()));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

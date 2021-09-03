@@ -21,6 +21,7 @@ public class Invoice {
         this.issuer = issuer;
         this.receiver = receiver;
         this.entries = entries;
+        this.id = null;
     }
 }
 

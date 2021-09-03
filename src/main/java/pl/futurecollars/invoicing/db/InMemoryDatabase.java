@@ -42,6 +42,9 @@ public class InMemoryDatabase implements Database {
     @Override
     public boolean delete(UUID id) {
         try {
+            if (!database.containsKey(id)) {
+                return false;
+            }
             database.remove(id);
         } catch (Exception exception) {
             return false;
