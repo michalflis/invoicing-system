@@ -6,16 +6,18 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import pl.futurecollars.invoicing.config.Configurations;
 import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.utils.FileService;
 import pl.futurecollars.invoicing.utils.JsonService;
 
+@RequiredArgsConstructor
 public class FileBasedDatabase implements Database {
 
-    FileService fileService = new FileService();
-    JsonService<Invoice> invoiceService = new JsonService<>();
-    JsonService<UUID> idService = new JsonService<>();
+    private final FileService fileService;
+    private final JsonService<Invoice> invoiceService;
+    private final JsonService<UUID> idService;
 
     private void setRandomID(Invoice invoice) {
         UUID id = UUID.randomUUID();
