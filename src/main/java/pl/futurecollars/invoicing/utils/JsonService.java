@@ -24,7 +24,7 @@ public class JsonService<T> {
         }
     }
 
-    public T covertToObject(String line, Class<T> t) {
+    public T convertToObject(String line, Class<T> t) {
         try {
             return objectMapper.readValue(line, t);
         } catch (IOException e) {

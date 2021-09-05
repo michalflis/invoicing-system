@@ -57,7 +57,7 @@ public class FileBasedDatabase implements Database {
     public List<Invoice> getAll() {
         return fileService.readFromDatabase()
             .stream()
-            .map(s -> invoiceService.covertToObject(s, Invoice.class))
+            .map(s -> invoiceService.convertToObject(s, Invoice.class))
             .collect(Collectors.toList());
     }
 
