@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class Invoice {
 
     private UUID id;
@@ -19,6 +21,7 @@ public class Invoice {
         this.issuer = issuer;
         this.receiver = receiver;
         this.entries = entries;
+        this.id = null;
     }
 }
 
