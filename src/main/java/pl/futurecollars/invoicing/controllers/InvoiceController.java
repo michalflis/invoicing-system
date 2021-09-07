@@ -29,7 +29,7 @@ public class InvoiceController {
             .body(invoiceService.save(invoice));
     }
 
-    @GetMapping(path = "/list")
+    @GetMapping(path = "/invoices")
     public ResponseEntity<List<UUID>> getAll() {
         return ResponseEntity.ok()
             .body(invoiceService.getAll()
@@ -38,11 +38,11 @@ public class InvoiceController {
                 .collect(Collectors.toList()));
     }
 
-    @GetMapping(path = "/get/{id}")
-    public ResponseEntity<Optional<Invoice>> getById(@PathVariable UUID id) {
+    @GetMapping(path = "/invoices/{id}")
+    public ResponseEntity<Invoice> getById(@PathVariable UUID id) {
         try {
             return ResponseEntity.ok()
-                .body(invoiceService.getById(id));
+                .body(invoiceService.getById(id).get());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
@@ -54,7 +54,7 @@ public class InvoiceController {
             .body(invoiceService.update(invoice));
     }
 
-    @DeleteMapping(path = "/delete/{id}")
+    @DeleteMapping(path = "/invoices/{id}")
     public ResponseEntity<Boolean> update(@PathVariable UUID id) {
         try {
             return ResponseEntity.ok()
