@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import org.springframework.stereotype.Component;
 import pl.futurecollars.invoicing.model.Invoice;
 
+@Component
 public class InMemoryDatabase implements Database {
 
     private Map<UUID, Invoice> database = new HashMap<>();

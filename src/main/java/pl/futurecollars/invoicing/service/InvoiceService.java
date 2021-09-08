@@ -7,10 +7,12 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.Data;
+import org.springframework.stereotype.Component;
 import pl.futurecollars.invoicing.db.InMemoryDatabase;
 import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.model.InvoiceEntry;
 
+@Component
 @Data
 public class InvoiceService {
 
