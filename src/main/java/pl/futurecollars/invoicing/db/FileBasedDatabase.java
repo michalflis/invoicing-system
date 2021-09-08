@@ -7,11 +7,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 import pl.futurecollars.invoicing.config.Configurations;
 import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.utils.FileService;
 import pl.futurecollars.invoicing.utils.JsonService;
 
+@Repository
 @RequiredArgsConstructor
 public class FileBasedDatabase implements Database {
 
