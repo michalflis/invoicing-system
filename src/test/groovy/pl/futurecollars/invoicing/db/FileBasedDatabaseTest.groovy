@@ -9,8 +9,8 @@ class FileBasedDatabaseTest extends DatabaseTest {
     Database getDatabaseInstance() {
         def fileService = new FileService()
         fileService.clearDatabase()
-        def invoiceService = new JsonService<Invoice>()
-        def idService = new JsonService<UUID>()
+        def invoiceService = new JsonService<Invoice>(objectMapper)
+        def idService = new JsonService<UUID>(objectMapper)
         return new FileBasedDatabase(fileService, invoiceService, idService)
     }
 }

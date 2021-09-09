@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import pl.futurecollars.invoicing.model.Invoice;
 
-@Repository
+@Service
 @RequiredArgsConstructor
 public class InMemoryDatabase implements Database {
 
