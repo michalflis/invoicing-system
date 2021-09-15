@@ -3,15 +3,16 @@ package pl.futurecollars.invoicing.db;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import pl.futurecollars.invoicing.model.Invoice;
 
-@Component
+@Service
+@RequiredArgsConstructor
 public class InMemoryDatabase implements Database {
 
-    private Map<UUID, Invoice> database = new HashMap<>();
+    private final HashMap<UUID, Invoice> database;
 
     @Override
     public Invoice save(Invoice invoice) {

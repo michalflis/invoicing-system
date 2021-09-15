@@ -6,8 +6,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Service;
 import pl.futurecollars.invoicing.config.Configurations;
 
+@Service
 @NoArgsConstructor
 public class FileService {
 

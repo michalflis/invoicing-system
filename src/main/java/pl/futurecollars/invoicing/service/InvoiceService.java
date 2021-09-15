@@ -7,16 +7,21 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.Data;
-import org.springframework.stereotype.Component;
-import pl.futurecollars.invoicing.db.InMemoryDatabase;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import pl.futurecollars.invoicing.db.Database;
 import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.model.InvoiceEntry;
 
-@Component
+@Service
 @Data
 public class InvoiceService {
 
-    private final InMemoryDatabase database;
+    private final Database database;
+
+    public InvoiceService(@Qualifier("fileBasedDatabase") Database database) {
+        this.database = database;
+    }
 
     public BigDecimal getTotalNet(Invoice invoice) {
         return invoice.getEntries()
