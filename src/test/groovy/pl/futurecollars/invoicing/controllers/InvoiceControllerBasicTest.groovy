@@ -27,7 +27,11 @@ class InvoiceControllerBasicTest extends Specification {
     @Autowired
     private JsonService<Invoice> jsonService
 
-    @Shared def invoice = InvoiceFixture.invoice(1)
+    @Autowired
+    private JsonService<Invoice[]> jsonListService
+
+    @Shared
+    def invoice = InvoiceFixture.invoice(1)
 
 
     def "add single invoice"() {
@@ -45,7 +49,7 @@ class InvoiceControllerBasicTest extends Specification {
         invoice.setId(jsonService.convertToObject(response, Invoice.class).getId())
 
         then:
-        invoice ==  jsonService.convertToObject(response, Invoice.class)
+        invoice == jsonService.convertToObject(response, Invoice.class)
     }
 
     def "should return list of invoices"() {
@@ -56,10 +60,11 @@ class InvoiceControllerBasicTest extends Specification {
                 .response
                 .contentAsString
 
-        def invoices = ArrayList.of(invoice)
+        def invoices = jsonListService.convertToObject(response, Invoice[].class)
 
         then:
-        invoices ==  jsonService.convertToObject(response, Invoice.class)
+        invoices.size() > 0
+        invoices[0] == invoice
     }
 }
 
