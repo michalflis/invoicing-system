@@ -3,6 +3,7 @@ package pl.futurecollars.invoicing.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

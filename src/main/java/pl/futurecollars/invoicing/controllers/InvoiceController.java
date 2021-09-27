@@ -1,5 +1,6 @@
 package pl.futurecollars.invoicing.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -12,12 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.service.InvoiceService;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping(path = "/invoices", produces = { "application/json;charset=UTF-8" })
+
 public class InvoiceController {
 
     private final InvoiceService invoiceService;
@@ -28,16 +32,13 @@ public class InvoiceController {
             .body(invoiceService.save(invoice));
     }
 
-    @GetMapping(path = "/invoices")
-    public ResponseEntity<List<UUID>> getAll() {
+    @GetMapping
+    public ResponseEntity<List<Invoice>> getAll() {
         return ResponseEntity.ok()
-            .body(invoiceService.getAll()
-                .stream()
-                .map(Invoice::getId)
-                .collect(Collectors.toList()));
+            .body(new ArrayList<>(invoiceService.getAll()));
     }
 
-    @GetMapping(path = "/invoices/{id}")
+    @GetMapping(path = "/{id}")
     public ResponseEntity<Invoice> getById(@PathVariable UUID id) {
         try {
             return ResponseEntity.ok()
@@ -53,7 +54,7 @@ public class InvoiceController {
             .body(invoiceService.update(invoice));
     }
 
-    @DeleteMapping(path = "/invoices/{id}")
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<Boolean> update(@PathVariable UUID id) {
         try {
             return ResponseEntity.ok()
