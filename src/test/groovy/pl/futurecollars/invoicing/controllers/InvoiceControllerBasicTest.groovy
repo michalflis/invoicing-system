@@ -13,6 +13,8 @@ import spock.lang.Specification
 import spock.lang.Stepwise
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
@@ -33,6 +35,11 @@ class InvoiceControllerBasicTest extends Specification {
     @Shared
     def invoice = InvoiceFixture.invoice(1)
 
+    @Shared
+    def updatedInvoice = InvoiceFixture.invoice(2)
+
+    @Shared
+    UUID id
 
     def "add single invoice"() {
         given:
@@ -46,7 +53,8 @@ class InvoiceControllerBasicTest extends Specification {
                 .response
                 .contentAsString
 
-        invoice.setId(jsonService.convertToObject(response, Invoice.class).getId())
+        id = jsonService.convertToObject(response, Invoice.class).getId()
+        invoice.setId(id)
 
         then:
         invoice == jsonService.convertToObject(response, Invoice.class)
@@ -65,6 +73,62 @@ class InvoiceControllerBasicTest extends Specification {
         then:
         invoices.size() > 0
         invoices[0] == invoice
+    }
+
+    def "should update invoice"() {
+        given:
+        updatedInvoice.setId(id)
+        def updatedInvoiceAsJson = jsonService.convertToJson(updatedInvoice)
+
+        when:
+        def response = mockMvc.perform(
+                put("/invoices").content(updatedInvoiceAsJson).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .response
+                .contentAsString
+
+        then:
+        updatedInvoice == jsonService.convertToObject(response, Invoice.class)
+    }
+
+    def "should return updatedInvoice by id"() {
+        when:
+        def response = mockMvc.perform(get("/invoices/" + id))
+                .andExpect(status().isOk())
+                .andReturn()
+                .response
+                .contentAsString
+
+        then:
+        updatedInvoice == jsonService.convertToObject(response, Invoice.class)
+    }
+
+    def "should return delete by id"() {
+        when:
+        def response = mockMvc.perform(delete("/invoices/" + id))
+                .andExpect(status().isOk())
+                .andReturn()
+                .response
+                .contentAsString
+
+        then:
+        response == "true"
+    }
+
+    def "should return empty list of invoices"() {
+        when:
+        def response = mockMvc.perform(get("/invoices"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .response
+                .contentAsString
+
+        def invoices = jsonListService.convertToObject(response, Invoice[].class)
+
+        then:
+        invoices.size() == 0
+        response == "[]"
     }
 }
 
