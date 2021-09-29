@@ -16,7 +16,7 @@ public class FileService {
 
     private void writeToFile(String line, String path) {
         try {
-            Files.writeString(Paths.get(path), line + "\n", StandardCharsets.UTF_8,  StandardOpenOption.APPEND);
+            Files.writeString(Paths.get(path), line + "\n", StandardCharsets.UTF_8, StandardOpenOption.APPEND);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -41,7 +41,7 @@ class InvoiceControllerBasicTest extends Specification {
     @Shared
     UUID id
 
-    def "add single invoice"() {
+    def "should add single invoice"() {
         given:
         def invoiceAsJson = jsonService.convertToJson(invoice)
 
@@ -104,7 +104,7 @@ class InvoiceControllerBasicTest extends Specification {
         updatedInvoice == jsonService.convertToObject(response, Invoice.class)
     }
 
-    def "should return delete by id"() {
+    def "should delete invoice by id"() {
         when:
         def response = mockMvc.perform(delete("/invoices/" + id))
                 .andExpect(status().isOk())

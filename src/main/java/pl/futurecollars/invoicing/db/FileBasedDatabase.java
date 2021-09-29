@@ -65,9 +65,12 @@ public class FileBasedDatabase implements Database {
 
     @Override
     public Invoice update(Invoice updatedInvoice) {
-        delete(updatedInvoice.getId());
-        save(updatedInvoice);
-        return updatedInvoice;
+        if (containsID(updatedInvoice.getId())) {
+            delete(updatedInvoice.getId());
+            save(updatedInvoice);
+            return updatedInvoice;
+        }
+        return null;
     }
 
     @Override

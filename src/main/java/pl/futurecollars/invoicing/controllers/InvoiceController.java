@@ -3,7 +3,6 @@ package pl.futurecollars.invoicing.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ import pl.futurecollars.invoicing.service.InvoiceService;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping(path = "/invoices", produces = { "application/json;charset=UTF-8" })
+@RequestMapping(path = "/invoices", produces = {"application/json;charset=UTF-8"})
 
 public class InvoiceController {
 
