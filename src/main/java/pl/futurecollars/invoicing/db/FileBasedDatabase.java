@@ -6,15 +6,15 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 import org.springframework.stereotype.Service;
 import pl.futurecollars.invoicing.config.Configurations;
 import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.utils.FileService;
 import pl.futurecollars.invoicing.utils.JsonService;
 
+@Data
 @Service
-@RequiredArgsConstructor
 public class FileBasedDatabase implements Database {
 
     private final FileService fileService;
@@ -65,9 +65,12 @@ public class FileBasedDatabase implements Database {
 
     @Override
     public Invoice update(Invoice updatedInvoice) {
-        delete(updatedInvoice.getId());
-        save(updatedInvoice);
-        return updatedInvoice;
+        if (containsID(updatedInvoice.getId())) {
+            delete(updatedInvoice.getId());
+            save(updatedInvoice);
+            return updatedInvoice;
+        }
+        return null;
     }
 
     @Override

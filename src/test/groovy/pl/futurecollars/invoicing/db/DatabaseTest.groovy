@@ -15,7 +15,7 @@ abstract class DatabaseTest extends Specification {
     def date = new LocalDate(2021, 5, 5)
     def entries = new ArrayList<InvoiceEntry>();
     def invoice = new Invoice(date, issuer, receiver, entries)
-    def database
+    Database database
 
     def setup() {
         database = getDatabaseInstance()

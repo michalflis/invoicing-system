@@ -15,4 +15,8 @@ class CompanyTest extends Specification {
         result != null
     }
 
+    def "should do nothing"() {
+
+    }
+
 }

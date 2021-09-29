@@ -1,16 +1,19 @@
 package pl.futurecollars.invoicing.db
 
-import pl.futurecollars.invoicing.model.Invoice
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
 import pl.futurecollars.invoicing.utils.FileService
-import pl.futurecollars.invoicing.utils.JsonService
 
+@SpringBootTest
 class FileBasedDatabaseTest extends DatabaseTest {
+
+    @Autowired
+    FileBasedDatabase fileBasedDatabase
+
     @Override
     Database getDatabaseInstance() {
         def fileService = new FileService()
         fileService.clearDatabase()
-        def invoiceService = new JsonService<Invoice>(objectMapper)
-        def idService = new JsonService<UUID>(objectMapper)
-        return new FileBasedDatabase(fileService, invoiceService, idService)
+        return fileBasedDatabase
     }
 }
