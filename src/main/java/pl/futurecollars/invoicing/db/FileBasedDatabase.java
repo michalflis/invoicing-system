@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.Data;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import pl.futurecollars.invoicing.config.Configurations;
 import pl.futurecollars.invoicing.model.Invoice;
@@ -14,6 +15,7 @@ import pl.futurecollars.invoicing.utils.FileService;
 import pl.futurecollars.invoicing.utils.JsonService;
 
 @Data
+@ConditionalOnProperty(name = "invoicing-system.database", havingValue = "file")
 @Service
 public class FileBasedDatabase implements Database {
 

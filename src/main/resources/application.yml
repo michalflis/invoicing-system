@@ -1,0 +1,12 @@
+invoicing-system:
+  database: file
+
+logging:
+  level:
+    pl.futurecollars.invoicing: error
+    org.springframework: error
+
+spring:
+  profiles:
+    active: dev
+
