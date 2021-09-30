@@ -48,7 +48,7 @@ public class InvoiceController {
             return ResponseEntity.ok()
                 .body(invoiceService.getById(id).get());
         } catch (Exception e) {
-            log.debug("Exception: " + e + " occurred while getting invoice ID: " + id + " from database");
+            log.error("Exception: " + e + " occurred while getting invoice ID: " + id + " from database");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
@@ -67,7 +67,7 @@ public class InvoiceController {
             return ResponseEntity.ok()
                 .body(invoiceService.delete(id));
         } catch (Exception e) {
-            log.debug("Exception: " + e + " occurred while deleting invoice ID: " + id + " from database");
+            log.error("Exception: " + e + " occurred while deleting invoice ID: " + id + " from database");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

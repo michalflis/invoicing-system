@@ -86,9 +86,6 @@ java {
 test {
     finalizedBy jacocoTestReport
     finalizedBy jacocoTestCoverageVerification
-}
-
-tasks.withType(Test) {
     useJUnitPlatform()
     jvmArgs '--enable-preview'
 }
