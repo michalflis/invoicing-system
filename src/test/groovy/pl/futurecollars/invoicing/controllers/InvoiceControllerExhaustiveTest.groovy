@@ -28,7 +28,9 @@ class InvoiceControllerExhaustiveTest extends Specification {
     @Autowired
     private FileService fileService
 
-    def cleanup() { fileService.clearDatabase() }
+    def cleanup() {
+        fileService.clearDatabase()
+    }
 
     @Autowired
     private JsonService<Invoice> jsonService
@@ -41,7 +43,7 @@ class InvoiceControllerExhaustiveTest extends Specification {
     def invoice1 = InvoiceFixture.invoice(2)
     def invoice2 = InvoiceFixture.invoice(3)
 
-    def "should add 3 invoices"() {
+    def"should add 3 invoices"() {
         given:
         def invoiceAsJson = jsonService.convertToJson(invoice)
         def invoice1AsJson = jsonService.convertToJson(invoice1)

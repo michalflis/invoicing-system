@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Service;
 import pl.futurecollars.invoicing.model.Invoice;
 
+@ConditionalOnProperty(name = "invoicing-system.database", havingValue = "memory")
+@Service
 public class InMemoryDatabase implements Database {
 
     private final HashMap<UUID, Invoice> database = new HashMap<>();
@@ -35,7 +39,11 @@ public class InMemoryDatabase implements Database {
 
     @Override
     public Invoice update(Invoice updatedInvoice) {
-        return database.put(updatedInvoice.getId(), updatedInvoice);
+        if (database.containsKey(updatedInvoice.getId())) {
+            database.put(updatedInvoice.getId(), updatedInvoice);
+            return updatedInvoice;
+        }
+        return null;
     }
 
     @Override
@@ -49,5 +57,9 @@ public class InMemoryDatabase implements Database {
             return false;
         }
         return true;
+    }
+
+    public void clearDatabase() {
+        database.clear();
     }
 }
