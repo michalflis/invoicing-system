@@ -89,6 +89,12 @@ public class FileBasedDatabase implements Database {
         return false;
     }
 
+    @Override
+    public boolean clear() {
+        fileService.clearDatabase();
+        return true;
+    }
+
     public boolean containsID(UUID id) {
         try {
             return Files.readAllLines(Paths.get(Configurations.FILE_ID_KEEPER_PATH))

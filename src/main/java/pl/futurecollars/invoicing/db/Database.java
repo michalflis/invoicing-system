@@ -15,4 +15,6 @@ public interface Database {
     Invoice update(Invoice updatedInvoice);
 
     boolean delete(UUID id);
+
+    boolean clear();
 }

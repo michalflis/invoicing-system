@@ -59,7 +59,9 @@ public class InMemoryDatabase implements Database {
         return true;
     }
 
-    public void clearDatabase() {
+    @Override
+    public boolean clear() {
         database.clear();
+        return true;
     }
 }
