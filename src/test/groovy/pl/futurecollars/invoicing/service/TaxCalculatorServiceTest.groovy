@@ -3,59 +3,24 @@ package pl.futurecollars.invoicing.service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.MockMvc
 import pl.futurecollars.invoicing.db.Database
 import pl.futurecollars.invoicing.fixtures.InvoiceFixture
-import pl.futurecollars.invoicing.model.Invoice
-import pl.futurecollars.invoicing.utils.JsonService
 import spock.lang.Shared
 import spock.lang.Specification
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@SpringBootTest
-@AutoConfigureMockMvc
-class TaxCalculatorTest extends Specification {
+class TaxCalculatorServiceTest extends Specification {
 
-    @Autowired
-    private MockMvc mockMvc
-
-    @Autowired
-    private TaxCalculatorService taxCalculatorService
-
-    @Autowired
-    private JsonService<Invoice> jsonService
-
-    @Autowired
-    private Database database
+    private Database database = Mock()
+    private TaxCalculatorService taxCalculatorService = new TaxCalculatorService(database)
 
     @Shared
     def invoice = InvoiceFixture.invoice(1)
     def invoice1 = InvoiceFixture.invoice(2)
 
     def setup() {
-        database.clear()
-
-        def invoiceAsJson = jsonService.convertToJson(invoice)
-        def invoice1AsJson = jsonService.convertToJson(invoice1)
-
-        mockMvc.perform(
-                post("/invoices").content(invoiceAsJson).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-
-        mockMvc.perform(
-                post("/invoices").content(invoice1AsJson).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-
-        mockMvc.perform(
-                post("/invoices").content(invoice1AsJson).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-
+        database.getAll() >> [invoice, invoice1, invoice1]
     }
-
-    def cleanup() { database.clear() }
 
     def "should calculate income for company(2)"() {
         when:
