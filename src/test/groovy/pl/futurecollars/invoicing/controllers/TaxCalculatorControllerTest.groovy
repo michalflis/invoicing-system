@@ -62,7 +62,8 @@ class TaxCalculatorControllerTest extends Specification {
     def "Should get tax report for company(2)"() {
         given:
         def taxIdentificationNumber = invoice1.getIssuer().getTaxIdentificationNumber()
-        def taxReport = new TaxReport().setIncomingVat(BigDecimal.valueOf(414))
+        def taxReport = new TaxReport.TaxReportBuilder()
+                .setIncomingVat(BigDecimal.valueOf(414))
                 .setOutgoingVat(BigDecimal.valueOf(138))
                 .setIncome(BigDecimal.valueOf(1800))
                 .setCosts(BigDecimal.valueOf(600))

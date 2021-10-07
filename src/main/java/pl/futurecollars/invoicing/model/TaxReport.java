@@ -25,39 +25,49 @@ public class TaxReport {
         this.vatToPay = vatToPay;
     }
 
-    public TaxReport setIncomingVat(BigDecimal incomingVat) {
-        this.incomingVat = incomingVat.setScale(2);
-        return this;
-    }
+    public static class TaxReportBuilder {
 
-    public TaxReport setOutgoingVat(BigDecimal outgoingVat) {
-        this.outgoingVat = outgoingVat.setScale(2);
-        return this;
-    }
+        private BigDecimal incomingVat;
+        private BigDecimal outgoingVat;
+        private BigDecimal income;
+        private BigDecimal costs;
+        private BigDecimal earnings;
+        private BigDecimal vatToPay;
 
-    public TaxReport setIncome(BigDecimal income) {
-        this.income = income.setScale(2);
-        return this;
-    }
+        public TaxReportBuilder setIncomingVat(BigDecimal incomingVat) {
+            this.incomingVat = incomingVat.setScale(2);
+            return this;
+        }
 
-    public TaxReport setCosts(BigDecimal costs) {
-        this.costs = costs.setScale(2);
-        return this;
-    }
+        public TaxReportBuilder setOutgoingVat(BigDecimal outgoingVat) {
+            this.outgoingVat = outgoingVat.setScale(2);
+            return this;
+        }
 
-    public TaxReport setEarnings(BigDecimal earnings) {
-        this.earnings = earnings.setScale(2);
-        return this;
-    }
+        public TaxReportBuilder setIncome(BigDecimal income) {
+            this.income = income.setScale(2);
+            return this;
+        }
 
-    public TaxReport setVatToPay(BigDecimal vatToPay) {
-        this.vatToPay = vatToPay.setScale(2);;
-        return this;
-    }
+        public TaxReportBuilder setCosts(BigDecimal costs) {
+            this.costs = costs.setScale(2);
+            return this;
+        }
 
-    public TaxReport build() {
-        return new TaxReport(this.incomingVat, this.outgoingVat, this.income,
-            this.costs, this.earnings, this.vatToPay);
+        public TaxReportBuilder setEarnings(BigDecimal earnings) {
+            this.earnings = earnings.setScale(2);
+            return this;
+        }
+
+        public TaxReportBuilder setVatToPay(BigDecimal vatToPay) {
+            this.vatToPay = vatToPay.setScale(2);
+            return this;
+        }
+
+        public TaxReport build() {
+            return new TaxReport(this.incomingVat, this.outgoingVat, this.income,
+                this.costs, this.earnings, this.vatToPay);
+        }
     }
 }
 

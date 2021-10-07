@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class TaxCalculatorServiceTest extends Specification {
+class TaxCalculatorTest extends Specification {
 
     @Autowired
     private MockMvc mockMvc

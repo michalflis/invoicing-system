@@ -107,7 +107,6 @@ abstract class DatabaseTest extends Specification {
         def result = database.clear()
 
         then:
-        result
         database.getAll().size() == 0
     }
 }

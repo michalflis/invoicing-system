@@ -16,5 +16,5 @@ public interface Database {
 
     boolean delete(UUID id);
 
-    boolean clear();
+    void clear();
 }

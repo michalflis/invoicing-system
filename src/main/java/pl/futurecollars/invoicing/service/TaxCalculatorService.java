@@ -54,7 +54,8 @@ public class TaxCalculatorService {
     }
 
     public TaxReport taxReport(String taxIdentificationNumber) {
-        return new TaxReport().setIncomingVat(incomingVat(taxIdentificationNumber))
+        return new TaxReport.TaxReportBuilder()
+            .setIncomingVat(incomingVat(taxIdentificationNumber))
             .setOutgoingVat(outgoingVat(taxIdentificationNumber))
             .setIncome(income(taxIdentificationNumber))
             .setCosts(costs(taxIdentificationNumber))

@@ -90,9 +90,8 @@ public class FileBasedDatabase implements Database {
     }
 
     @Override
-    public boolean clear() {
+    public void clear() {
         fileService.clearDatabase();
-        return true;
     }
 
     public boolean containsID(UUID id) {

@@ -60,8 +60,7 @@ public class InMemoryDatabase implements Database {
     }
 
     @Override
-    public boolean clear() {
+    public void clear() {
         database.clear();
-        return true;
     }
 }
