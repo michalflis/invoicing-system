@@ -1,12 +1,9 @@
 package pl.futurecollars.invoicing.db
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.test.context.SpringBootTest
-import pl.futurecollars.invoicing.utils.FileService
 
-@ConditionalOnProperty(name="invoicing-system.database", havingValue = "file")
-@SpringBootTest
+@SpringBootTest(properties="invoicing-system.database=file")
 class FileBasedDatabaseTest extends DatabaseTest {
 
     @Autowired
@@ -14,8 +11,6 @@ class FileBasedDatabaseTest extends DatabaseTest {
 
     @Override
     Database getDatabaseInstance() {
-        def fileService = new FileService()
-        fileService.clearDatabase()
         return fileBasedDatabase
     }
 }

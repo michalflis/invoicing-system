@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public class Company {
 
     @ApiModelProperty(value = "Tax identification number", required = true, example = "123-45-67-819")
-    private String nip;
+    private String taxIdentificationNumber;
 
     @ApiModelProperty(value = "Company address", required = true, example = "Ul. Kubusia Puchatka 14A/6, 00-111 Gdańsk")
     private String address;
@@ -17,9 +17,9 @@ public class Company {
     @ApiModelProperty(value = "Company name", required = true, example = "XYZ")
     private String name;
 
-    public Company(String nip, String address, String name) {
+    public Company(String taxIdentificationNumber, String address, String name) {
 
-        this.nip = nip;
+        this.taxIdentificationNumber = taxIdentificationNumber;
         this.address = address;
         this.name = name;
     }

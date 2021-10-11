@@ -22,7 +22,8 @@ public class SpringFoxConfiguration {
             .paths(PathSelectors.any())
             .build()
             .tags(
-                new Tag("invoice-controller", "Controller used to list, add, update and delete invoices")
+                new Tag("invoice-controller", "Controller used to list, add, update and delete invoices"),
+                new Tag("tax-calculator-controller", "Controller used to generate tax report")
             )
             .apiInfo(apiInfo());
     }

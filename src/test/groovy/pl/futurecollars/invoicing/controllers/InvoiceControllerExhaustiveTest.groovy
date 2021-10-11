@@ -5,12 +5,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
+import pl.futurecollars.invoicing.db.Database
 import pl.futurecollars.invoicing.fixtures.InvoiceFixture
 import pl.futurecollars.invoicing.model.Invoice
 import pl.futurecollars.invoicing.utils.FileService
 import pl.futurecollars.invoicing.utils.JsonService
 import spock.lang.Shared
 import spock.lang.Specification
+
+import javax.xml.crypto.Data
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
@@ -26,9 +29,9 @@ class InvoiceControllerExhaustiveTest extends Specification {
     private MockMvc mockMvc
 
     @Autowired
-    private FileService fileService
+    private Database database
 
-    def cleanup() { fileService.clearDatabase() }
+    def cleanup() { database.clear() }
 
     @Autowired
     private JsonService<Invoice> jsonService

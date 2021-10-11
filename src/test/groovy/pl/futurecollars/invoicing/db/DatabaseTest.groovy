@@ -19,6 +19,7 @@ abstract class DatabaseTest extends Specification {
 
     def setup() {
         database = getDatabaseInstance()
+        database.clear()
     }
 
     def "should save invoice in to database"() {
@@ -91,6 +92,21 @@ abstract class DatabaseTest extends Specification {
 
         then:
         !result
+        database.getAll().size() == 0
+    }
+
+    def "should remove all invoices form database"() {
+        setup:
+        def invoice2 = new Invoice(date, issuer, receiver, entries)
+        def invoice3 = new Invoice(date, issuer, receiver, entries)
+        database.save(invoice)
+        database.save(invoice2)
+        database.save(invoice3)
+
+        when:
+        def result = database.clear()
+
+        then:
         database.getAll().size() == 0
     }
 }
