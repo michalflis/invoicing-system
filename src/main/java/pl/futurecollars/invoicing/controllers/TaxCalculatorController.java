@@ -21,7 +21,7 @@ public class TaxCalculatorController {
 
     @PostMapping(path = "/tax", produces = {"application/json;charset=UTF-8"})
     public ResponseEntity<TaxReport> getTaxReport(@RequestBody Company company) {
-        log.debug("Generate tax report for company with Tax Identification Number: " + company.getTaxIdentificationNumber());
+        log.debug("Generate tax report for company with Tax Identification Number: {} ", company.getTaxIdentificationNumber());
         return ResponseEntity.ok().body(taxCalculatorService.taxReport(company));
     }
 }
