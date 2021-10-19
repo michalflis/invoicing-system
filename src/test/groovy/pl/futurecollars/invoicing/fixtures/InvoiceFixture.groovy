@@ -13,4 +13,13 @@ class InvoiceFixture {
                 , InvoiceEntryFixture.product(id + 1)
                 , InvoiceEntryFixture.product(id + 2)))
     }
+
+    static invoiceWithGasoline(int id) {
+        new Invoice(LocalDate.now()
+                , CompanyFixture.company(id)
+                , CompanyFixture.company(id + 1)
+                , List.of(InvoiceEntryFixture.gasolineForTheCarUsedForPersonalReason()
+                , InvoiceEntryFixture.product(id + 1)
+                , InvoiceEntryFixture.product(id + 2)))
+    }
 }

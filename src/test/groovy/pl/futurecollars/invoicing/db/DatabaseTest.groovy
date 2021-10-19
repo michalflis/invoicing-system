@@ -10,8 +10,8 @@ abstract class DatabaseTest extends Specification {
 
     abstract Database getDatabaseInstance();
 
-    def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX")
-    def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY")
+    def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX", 1000.00, 1000.00)
+    def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY", 1000.00, 1000.00)
     def date = new LocalDate(2021, 5, 5)
     def entries = new ArrayList<InvoiceEntry>();
     def invoice = new Invoice(date, issuer, receiver, entries)
@@ -61,7 +61,7 @@ abstract class DatabaseTest extends Specification {
 
     def "should update invoice in the database"() {
         setup:
-        def issuerUpdated = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "CCC")
+        def issuerUpdated = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "CCC", 1000.00, 1000.00)
         def invoiceUpdated = new Invoice(date, issuerUpdated, receiver, entries)
         database.save(invoice)
         invoiceUpdated.setId(invoice.getId())
