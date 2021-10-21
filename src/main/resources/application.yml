@@ -3,8 +3,10 @@ invoicing-system:
 
 logging:
   level:
+    root: error
     pl.futurecollars.invoicing: error
     org.springframework: error
+
 
 spring:
   profiles:

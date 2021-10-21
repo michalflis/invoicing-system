@@ -8,12 +8,10 @@ import org.springframework.test.web.servlet.MockMvc
 import pl.futurecollars.invoicing.db.Database
 import pl.futurecollars.invoicing.fixtures.InvoiceFixture
 import pl.futurecollars.invoicing.model.Invoice
-import pl.futurecollars.invoicing.utils.FileService
 import pl.futurecollars.invoicing.utils.JsonService
 import spock.lang.Shared
 import spock.lang.Specification
 
-import javax.xml.crypto.Data
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
@@ -111,8 +109,8 @@ class InvoiceControllerExhaustiveTest extends Specification {
         invoice.setId(id)
 
         UUID updatedId
-        do updatedId = UUID.randomUUID()
-        while (updatedId == id)
+        for (updatedId = UUID.randomUUID();updatedId == id;)
+        {updatedId = UUID.randomUUID()}
 
         def updatedInvoice = InvoiceFixture.invoice(1)
         updatedInvoice.setId(updatedId)
@@ -155,8 +153,8 @@ class InvoiceControllerExhaustiveTest extends Specification {
         invoice.setId(id)
 
         UUID updatedId
-        do updatedId = UUID.randomUUID()
-        while (updatedId == id)
+        for (updatedId = UUID.randomUUID();updatedId == id;)
+        {updatedId = UUID.randomUUID()}
 
         def deleteResponse = mockMvc.perform(
                 delete("/invoices/" + updatedId))

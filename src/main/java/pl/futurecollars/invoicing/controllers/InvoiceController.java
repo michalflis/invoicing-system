@@ -36,31 +36,31 @@ public class InvoiceController implements InvoiceControllerApi {
 
     @Override
     public ResponseEntity<Invoice> getById(@PathVariable UUID id) {
-        log.debug("Getting invoice ID: " + id + " from database");
+        log.debug("Getting invoice ID: {} from database", id);
         try {
             return ResponseEntity.ok()
                 .body(invoiceService.getById(id).get());
         } catch (Exception e) {
-            log.error("Exception: " + e + " occurred while getting invoice ID: " + id + " from database");
+            log.error("Exception: {} occurred while getting invoice ID: {} from database", e, id);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
     @Override
     public ResponseEntity<Invoice> update(@RequestBody Invoice invoice) {
-        log.debug("Updating invoice ID: " + invoice.getId() + " in database");
+        log.debug("Updating invoice ID: {} in database", invoice.getId());
         return ResponseEntity.ok()
             .body(invoiceService.update(invoice));
     }
 
     @Override
     public ResponseEntity<Boolean> update(@PathVariable UUID id) {
-        log.debug("Deleting invoice ID: " + id + " from database");
+        log.debug("Deleting invoice ID: {} from database", id);
         try {
             return ResponseEntity.ok()
                 .body(invoiceService.delete(id));
         } catch (Exception e) {
-            log.error("Exception: " + e + " occurred while deleting invoice ID: " + id + " from database");
+            log.error("Exception: {} occurred while deleting invoice ID: {} from database", e, id);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
