@@ -1,5 +1,9 @@
 logging:
   level:
-    root: error
+    root: info
     pl.futurecollars.invoicing: debug
     org.springframework: warn
+
+invoicing-system:
+  database: file
+
