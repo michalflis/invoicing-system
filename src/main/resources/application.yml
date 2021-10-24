@@ -1,14 +1,14 @@
-invoicing-system:
-  database: file
-
 logging:
   level:
-    root: error
+    root: info
     pl.futurecollars.invoicing: error
     org.springframework: error
-
 
 spring:
   profiles:
     active: dev
+  flyway:
+    enabled: false
+
+
 
