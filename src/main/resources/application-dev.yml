@@ -5,5 +5,5 @@ logging:
     org.springframework: warn
 
 invoicing-system:
-  database: file
+  database: sql
 

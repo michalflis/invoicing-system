@@ -38,8 +38,8 @@ class TaxCalculatorControllerTest extends Specification {
     private Database database
 
     @Shared
-    def invoice = InvoiceFixture.invoice(1)
-    def invoice1 = InvoiceFixture.invoice(2)
+    def invoice = InvoiceFixture.invoice(0)
+    def invoice1 = InvoiceFixture.invoice(4)
 
     def setup() {
         database.clear()
@@ -54,32 +54,28 @@ class TaxCalculatorControllerTest extends Specification {
         mockMvc.perform(
                 post("/invoices").content(invoice1AsJson).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-
-        mockMvc.perform(
-                post("/invoices").content(invoice1AsJson).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
     }
 
     def cleanup() { database.clear() }
 
-    def "Should get tax report for company(2)"() {
+    def "Should get tax report for company(4)"() {
         given:
         def companyAsJson = jsonServiceCompany.convertToJson(invoice1.getIssuer())
         def taxReport = new TaxReport.TaxReportBuilder()
-                .setIncomingVat(BigDecimal.valueOf(414))
-                .setOutgoingVat(BigDecimal.valueOf(138))
-                .setIncome(BigDecimal.valueOf(1800))
-                .setCosts(BigDecimal.valueOf(600))
-                .setIncomeMinusCosts(BigDecimal.valueOf(1200))
-                .setVatToPay(BigDecimal.valueOf(276))
+                .setIncomingVat(BigDecimal.valueOf(345))
+                .setOutgoingVat(BigDecimal.valueOf(0))
+                .setIncome(BigDecimal.valueOf(1500))
+                .setCosts(BigDecimal.valueOf(0))
+                .setIncomeMinusCosts(BigDecimal.valueOf(1500))
+                .setVatToPay(BigDecimal.valueOf(345))
                 .setPensionInsurance(BigDecimal.valueOf(500.97))
-                .setIncomeMinusCostsMinusPensionInsurance(BigDecimal.valueOf(699.03))
-                .setTaxCalculationBase(BigDecimal.valueOf(699))
-                .setIncomeTax(BigDecimal.valueOf(132.81))
+                .setIncomeMinusCostsMinusPensionInsurance(BigDecimal.valueOf(999.03))
+                .setTaxCalculationBase(BigDecimal.valueOf(999))
+                .setIncomeTax(BigDecimal.valueOf(189.81))
                 .setHealthInsurance9(BigDecimal.valueOf(90))
                 .setHealthInsurance775(BigDecimal.valueOf(80))
-                .setIncomeTaxMinusHealthInsurance(BigDecimal.valueOf(52.81))
-                .setFinalIncomeTaxValue(BigDecimal.valueOf(52))
+                .setIncomeTaxMinusHealthInsurance(BigDecimal.valueOf(109.81))
+                .setFinalIncomeTaxValue(BigDecimal.valueOf(109))
                 .build()
 
         when:
