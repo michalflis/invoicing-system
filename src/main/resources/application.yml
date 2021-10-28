@@ -12,6 +12,6 @@ spring:
     password: 1234
     driver-class-name: org.postgresql.Driver
   flyway:
-    enabled: true
+    enabled: false
   profiles:
     active: dev

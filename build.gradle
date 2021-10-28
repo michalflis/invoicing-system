@@ -98,19 +98,3 @@ test {
 check {
     finalizedBy jacocoTestCoverageVerification
 }
-
-//task testWithFileDatabase(type: Test) {
-//    systemProperty 'spring.profiles.active', 'file'
-//}
-//
-//task testWithMemoryDatabase(type: Test) {
-//    systemProperty 'spring.profiles.active', 'memory'
-//}
-//
-//task testWithSqlDatabase(type: Test) {
-//    systemProperty 'spring.profiles.active', 'sql'
-//}
-//
-//test.dependsOn testWithFileDatabase
-//test.dependsOn testWithMemoryDatabase
-//test.dependsOn testWithSqlDatabase
