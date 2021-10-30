@@ -2,6 +2,9 @@ package pl.futurecollars.invoicing.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,10 +12,13 @@ import lombok.NoArgsConstructor;
 
 @Builder
 @Data
+@Entity
+@Table(name = "companies")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Company {
 
+    @Id
     @ApiModelProperty(value = "Tax identification number", required = true, example = "1234567819")
     private String taxIdentificationNumber;
 

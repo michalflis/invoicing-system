@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import pl.futurecollars.invoicing.dto.InvoiceListDto;
 import pl.futurecollars.invoicing.model.Invoice;
 
 @RequestMapping(path = "/invoices", produces = {"application/json;charset=UTF-8"})
@@ -25,6 +26,10 @@ public interface InvoiceControllerApi {
     @ApiOperation("Get list of all invoices")
     @GetMapping
     ResponseEntity<List<Invoice>> getAll();
+
+    @ApiOperation("Get short list of all invoices")
+    @GetMapping(path = "/list")
+    ResponseEntity<List<InvoiceListDto>> getList();
 
     @ApiOperation("Get invoice by ID")
     @GetMapping(path = "/{id}")

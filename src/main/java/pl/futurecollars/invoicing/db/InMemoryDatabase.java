@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import pl.futurecollars.invoicing.model.Invoice;
 
+@Data
 @ConditionalOnProperty(name = "invoicing-system.database", havingValue = "memory")
 @Service
 public class InMemoryDatabase implements Database {
