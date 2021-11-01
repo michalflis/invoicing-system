@@ -1,32 +1,21 @@
 package pl.futurecollars.invoicing.db
 
-import org.flywaydb.core.Flyway
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.jdbc.core.JdbcTemplate
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.test.annotation.IfProfileValue
+import pl.futurecollars.invoicing.repository.InvoiceRepository
 
-import javax.sql.DataSource
-
-@SpringBootTest(properties = "invoicing-system.database=jpa")
+@DataJpaTest
+@IfProfileValue(name = "invoicing-system.database", value = "jpa")
 class JpaDatabaseTest extends DatabaseTest {
 
-    @Override
+    @Autowired
+    private InvoiceRepository invoiceRepository
+
     Database getDatabaseInstance() {
-        DataSource dataSource = new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build()
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource)
-
-        Flyway flyway = Flyway.configure()
-                .dataSource(dataSource)
-                .locations("db/migration")
-                .load()
-
-        flyway.clean()
-        flyway.migrate()
-
-        def database = new SqlDatabase(jdbcTemplate)
-
-        return database
+        assert invoiceRepository != null
+        new JpaDatabase(invoiceRepository)
     }
 }
+
 
