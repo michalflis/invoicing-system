@@ -38,6 +38,9 @@ public class InvoiceEntry {
     private BigDecimal price;
 
     @ApiModelProperty(hidden = true)
+    private int id;
+
+    @ApiModelProperty(hidden = true)
     private BigDecimal vatValue;
 
     @ApiModelProperty(value = "Product tax rate", required = true, example = "VAT_23")
