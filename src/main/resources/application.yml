@@ -4,11 +4,14 @@ logging:
     pl.futurecollars.invoicing: error
     org.springframework: error
 
+
 spring:
-  profiles:
-    active: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 1234
+    driver-class-name: org.postgresql.Driver
   flyway:
     enabled: false
-
-
-
+  profiles:
+    active: dev

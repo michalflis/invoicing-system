@@ -2,11 +2,16 @@ package pl.futurecollars.invoicing.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class InvoiceEntry {
 
     @ApiModelProperty(value = "Product description", required = true, example = "Młotek")
@@ -16,9 +21,12 @@ public class InvoiceEntry {
     private BigDecimal price;
 
     @ApiModelProperty(hidden = true)
+    private int id;
+
+    @ApiModelProperty(hidden = true)
     private BigDecimal vatValue;
 
-    @ApiModelProperty(value = "Product tax rate", required = true)
+    @ApiModelProperty(value = "Product tax rate", required = true, example = "VAT_23")
     private Vat vatRate;
 
     @ApiModelProperty(value = "Mark if car is also used for personal reasons")
@@ -32,7 +40,7 @@ public class InvoiceEntry {
         this.description = description;
         this.price = price;
         this.vatRate = vatRate;
-        this.vatValue = price.multiply(new BigDecimal(Float.toString(vatRate.getRate())));
+        this.vatValue = price.multiply(new BigDecimal(Float.toString(vatRate.getRate()))).setScale(2, RoundingMode.HALF_UP);
         this.carRegistrationNumber = "";
         this.carUsedForPersonalReason = false;
     }
@@ -41,7 +49,7 @@ public class InvoiceEntry {
         this.description = description;
         this.price = price;
         this.vatRate = vatRate;
-        this.vatValue = price.multiply(new BigDecimal(Float.toString(vatRate.getRate())));
+        this.vatValue = price.multiply(new BigDecimal(Float.toString(vatRate.getRate()))).setScale(2, RoundingMode.HALF_UP);
         this.carRegistrationNumber = carRegistrationNumber;
         this.carUsedForPersonalReason = carUsedForPersonalReason;
     }

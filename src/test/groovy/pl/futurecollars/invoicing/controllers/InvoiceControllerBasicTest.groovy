@@ -36,7 +36,7 @@ class InvoiceControllerBasicTest extends Specification {
     def invoice = InvoiceFixture.invoice(1)
 
     @Shared
-    def updatedInvoice = InvoiceFixture.invoice(2)
+    def updatedInvoice = InvoiceFixture.invoice(1)
 
     @Shared
     UUID id

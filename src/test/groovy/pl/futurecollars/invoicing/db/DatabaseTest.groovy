@@ -1,5 +1,6 @@
 package pl.futurecollars.invoicing.db
 
+import pl.futurecollars.invoicing.fixtures.InvoiceFixture
 import pl.futurecollars.invoicing.model.Company
 import pl.futurecollars.invoicing.model.Invoice
 import pl.futurecollars.invoicing.model.InvoiceEntry
@@ -10,7 +11,7 @@ abstract class DatabaseTest extends Specification {
 
     abstract Database getDatabaseInstance();
 
-    def issuer = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX", 1000.00, 1000.00)
+    def issuer = new Company("123-45-67-222", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "XXX", 1000.00, 1000.00)
     def receiver = new Company("123-22-98-748", "Ul. Kaczki Balbinki 17c/23, 02-358 Straszyn", "YYY", 1000.00, 1000.00)
     def date = new LocalDate(2021, 5, 5)
     def entries = new ArrayList<InvoiceEntry>();
@@ -46,8 +47,8 @@ abstract class DatabaseTest extends Specification {
 
     def "should get list of all invoices from database"() {
         setup:
-        def invoice2 = new Invoice(date, issuer, receiver, entries)
-        def invoice3 = new Invoice(date, issuer, receiver, entries)
+        def invoice2 = InvoiceFixture.invoice(1)
+        def invoice3 = InvoiceFixture.invoice(3)
         database.save(invoice)
         database.save(invoice2)
         database.save(invoice3)
@@ -61,7 +62,7 @@ abstract class DatabaseTest extends Specification {
 
     def "should update invoice in the database"() {
         setup:
-        def issuerUpdated = new Company("123-45-67-819", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "CCC", 1000.00, 1000.00)
+        def issuerUpdated = new Company("123-45-67-222", "Ul. Kubusia Puchatka 13/2, 01-001 Pułtusk", "CCC", 1000.00, 1000.00)
         def invoiceUpdated = new Invoice(date, issuerUpdated, receiver, entries)
         database.save(invoice)
         invoiceUpdated.setId(invoice.getId())
@@ -97,8 +98,8 @@ abstract class DatabaseTest extends Specification {
 
     def "should remove all invoices form database"() {
         setup:
-        def invoice2 = new Invoice(date, issuer, receiver, entries)
-        def invoice3 = new Invoice(date, issuer, receiver, entries)
+        def invoice2 = InvoiceFixture.invoice(1)
+        def invoice3 = InvoiceFixture.invoice(3)
         database.save(invoice)
         database.save(invoice2)
         database.save(invoice3)

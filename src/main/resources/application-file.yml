@@ -1,2 +1,6 @@
 invoicing-system:
   database: file
+
+spring:
+  flyway:
+    enabled: false

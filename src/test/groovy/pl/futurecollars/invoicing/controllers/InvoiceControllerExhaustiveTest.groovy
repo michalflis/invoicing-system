@@ -28,7 +28,7 @@ class InvoiceControllerExhaustiveTest extends Specification {
 
     @Autowired
     private Database database
-
+    def setup() { database.clear() }
     def cleanup() { database.clear() }
 
     @Autowired
@@ -39,8 +39,8 @@ class InvoiceControllerExhaustiveTest extends Specification {
 
     @Shared
     def invoice = InvoiceFixture.invoice(1)
-    def invoice1 = InvoiceFixture.invoice(2)
-    def invoice2 = InvoiceFixture.invoice(3)
+    def invoice1 = InvoiceFixture.invoice(3)
+    def invoice2 = InvoiceFixture.invoice(5)
 
     def "should add 3 invoices"() {
         given:
@@ -130,7 +130,6 @@ class InvoiceControllerExhaustiveTest extends Specification {
         then:
         invoice != updatedInvoice
         invoices[0] == invoice
-        putResponse == ""
     }
 
     def "should delete not existing invoice"() {
