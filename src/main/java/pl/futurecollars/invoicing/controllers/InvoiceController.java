@@ -32,14 +32,14 @@ public class InvoiceController implements InvoiceControllerApi {
     public ResponseEntity<List<Invoice>> getAll() {
         log.debug("Getting all invoices from database");
         return ResponseEntity.ok()
-            .body(new ArrayList<>(invoiceService.getAll()));
+            .body(invoiceService.getAll());
     }
 
     @Override
     public ResponseEntity<List<InvoiceListDto>> getList() {
         log.debug("Getting list of invoices from database");
         return ResponseEntity.ok()
-            .body(new ArrayList<>(invoiceService.getList()));
+            .body(invoiceService.getList());
     }
 
     @Override
