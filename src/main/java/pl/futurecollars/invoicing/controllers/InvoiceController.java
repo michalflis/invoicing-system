@@ -1,6 +1,5 @@
 package pl.futurecollars.invoicing.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import pl.futurecollars.invoicing.dto.InvoiceListDto;
 import pl.futurecollars.invoicing.model.Invoice;
 import pl.futurecollars.invoicing.service.InvoiceService;
 
@@ -31,7 +31,14 @@ public class InvoiceController implements InvoiceControllerApi {
     public ResponseEntity<List<Invoice>> getAll() {
         log.debug("Getting all invoices from database");
         return ResponseEntity.ok()
-            .body(new ArrayList<>(invoiceService.getAll()));
+            .body(invoiceService.getAll());
+    }
+
+    @Override
+    public ResponseEntity<List<InvoiceListDto>> getList() {
+        log.debug("Getting list of invoices from database");
+        return ResponseEntity.ok()
+            .body(invoiceService.getList());
     }
 
     @Override
