@@ -1,0 +1,9 @@
+invoicing-system:
+  database: mongo
+
+spring:
+  flyway:
+    enabled: false
+
+
+
