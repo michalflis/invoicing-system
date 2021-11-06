@@ -7,7 +7,7 @@ logging:
 
 spring:
   profiles:
-    active: mongo
+    active: test
 
 
 

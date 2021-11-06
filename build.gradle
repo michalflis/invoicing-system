@@ -90,6 +90,14 @@ jacocoTestCoverageVerification {
 
 jacocoTestReport {
     dependsOn test
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "pl/futurecollars/invoicing/dto/mappers/*"
+            ])
+        }))
+    }
 }
 
 java {
