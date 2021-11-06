@@ -6,31 +6,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  tests:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
       - name: Start MongoDb
-      uses: supercharge/mongodb-github-action@1.6.0
-      with:
-        mongodb-version: 4.4
+        uses: supercharge/mongodb-github-action@1.6.0
+        with:
+          mongodb-version: 4.4
       - name: Test with Gradle
         run: ./gradlew test
-
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       - name: Start MongoDb
-      uses: supercharge/mongodb-github-action@1.6.0
-      with:
-        mongodb-version: 4.4
-
+        uses: supercharge/mongodb-github-action@1.6.0
+        with:
+          mongodb-version: 4.4
       - name: Build with Gradle
         run: ./gradlew build
-
   docker:
     runs-on: ubuntu-latest
     steps:
