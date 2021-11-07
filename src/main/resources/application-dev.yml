@@ -6,4 +6,4 @@ logging:
 
 invoicing-system:
 
-  database: jpa
+  database: mongo
